@@ -49,6 +49,9 @@ static void button_callback_13(uint8_t rf, void *arg)
 
         // 이전에 버튼이 눌렸던 시간과 현재시간을 비교해서 일정시간이 지났다면
         //                        (왜? LED 충전 시간 지연 때문이었는데 LED 관련 코드가 없어짐)
+        // 아래의 rf(=버튼 입력 상태),arg(=GPIO번호)는 io.c에서 확인이 가능하다.
+        // 해당 함수는 PC13번과 연결된 GPIO만 보지만 버튼이 io.c에서 만약 여러개의 GPIO 리스트를 선언하고 각각의 알맞은 번호를 선언했다면
+        // 다른
         if (curr_tick - prev_tick > 120) { // 설정시간 : 120ms
                 prev_tick = curr_tick;
                 // 변경된 비트 값으로 눌렸는지 떨어졌는지를 설정함
