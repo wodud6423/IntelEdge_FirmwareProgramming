@@ -68,7 +68,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		volatile GPIO_PinState sts = HAL_GPIO_ReadPin(gIOExtiObjs[i].port, gIOExtiObjs[i].pin);
 		// 해당 핀이 지금 들어온 핀가 맞다면,
 		// 그 위치의 콜백 펑션을 호출
-		if (GPIO_Pin & (0x01 << i)) 	gIOExtiObjs[i].cbf((uint8_t)sts, (void *)&i);
+		if (GPIO_Pin & (0x01 << i)) 	gIOExtiObjs[i].cbf((uint8_t)sts, (void *)&i); 
+		//button.c에서 sts = edge_rising_or_falling(버튼 상태 확인) = rf | i = button_no(버튼 번호) = *(uint16_t *)arg 으로 넣어지게 된다.
 	}
 }
 
