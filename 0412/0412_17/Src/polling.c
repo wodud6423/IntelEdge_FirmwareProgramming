@@ -34,23 +34,24 @@ typedef struct {
 
 // volatile을 쓴 이유?-> 캐시에 올라가서 안돼!!
 // 캐시는 메모리상이 아닌 캐시에 올려놓고 cashe - cpu // 에서만 데이터 교환이 일어난다. 근데 얘는 폴링방식의 주기가 담긴 값이 바뀌어서는 안되는 구조체이다!
-
+//우리는 두 가지 스레드
 volatile THR_T gThrObjs[]  = {
 	{ .period = 500, 	.cbf = adc_thread			},
 	{ .period = 1500, 	.cbf = adc_callback_2		},
 	{ .cbf = NULL			}
 };
 
-// 폴링방식 -> 
+// 폴링방식 adc스레드 초기화및 adc콜백등록
 void polling_init(void)
 {
 	adc_init();
 	adc_regcbf(0, adc_callback);
 }
 
+// 폴링방식 스레드들을 처리하는 함수
 void polling_thread(void *arg)
 {
-	static uint16_t thr_idx = 0;
+	static uint16_t thr_idx = 0; // 폴링방식 스레드 인덱스!
 
 	if (gThrObjs[thr_idx].flag == true) {
 		gThrObjs[thr_idx].flag = false;
