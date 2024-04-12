@@ -15,8 +15,9 @@ extern "C" {
 #endif
 
 void uart_init(void);
+void uart_regcbf(void (*cbf)(void *));
 void uart_thread(void *);
-void uart_regcbf(void (*cbf)(void*));
+
 #ifdef __cplusplus
 }
 #endif

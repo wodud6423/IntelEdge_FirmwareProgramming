@@ -10,6 +10,7 @@
 #include "polling.h"
 
 static void adc_callback(void *arg);
+static void adc_callback_2(void *arg);
 
 typedef struct {
 	uint32_t period, count;
@@ -18,7 +19,8 @@ typedef struct {
 } THR_T; // thread type
 
 volatile THR_T gThrObjs[]  = {
-	{ .period = 500, 	.cbf = adc_thread		},
+	{ .period = 500, 	.cbf = adc_thread			},
+	{ .period = 1500, 	.cbf = adc_callback_2		},
 	{ .cbf = NULL			}
 };
 
@@ -42,7 +44,12 @@ void polling_thread(void *arg)
 
 static void adc_callback(void *arg)
 {
-	printf("adc value = %d\r\n", *(uint16_t *)arg);
+	printf("adc[0] value = %d\r\n", *(uint16_t *)arg);
+}
+
+static void adc_callback_2(void *arg)
+{
+	printf("adc[1] value = %d\r\n", *(uint16_t *)arg);
 }
 
 

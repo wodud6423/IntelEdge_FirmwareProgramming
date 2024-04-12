@@ -15,7 +15,8 @@ extern "C" {
 #endif
 
 void app(void);
-void app_check(void);
+void app_mode(int mode);
+//void app_check(void);
 
 #ifdef __cplusplus
 }
