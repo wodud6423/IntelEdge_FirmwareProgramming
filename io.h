@@ -14,8 +14,8 @@
 typedef void (*IO_CBF_T)(uint8_t, void *);
 typedef struct {
 	GPIO_TypeDef *port;			// GPIO Port
-	uint16_t pin;					// GPIO Pin
-	IO_CBF_T cbf;
+	uint16_t pin;				// GPIO Pin
+	IO_CBF_T cbf;				// Call back function
 } IO_EXTI_T;
 
 #ifdef __cplusplus
