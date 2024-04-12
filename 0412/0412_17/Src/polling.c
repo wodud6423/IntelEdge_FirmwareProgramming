@@ -8,12 +8,13 @@
 #include <stdbool.h>
 #include "adc.h"
 #include "polling.h"
-
+// ADC기능에 대한 콜백함수 선언부
 static void adc_callback(void *arg);
 static void adc_callback_2(void *arg);
 
+// 스레드 구조를 정의하는 스레드 구조체
 typedef struct {
-	uint32_t period, count;
+	uint32_t period, count; // 폴링방식을 위한 주기와 카운터
 	bool flag;
 	void (*cbf)(void *);
 } THR_T; // thread type
