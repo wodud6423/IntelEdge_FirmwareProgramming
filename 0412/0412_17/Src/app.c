@@ -65,13 +65,15 @@ void app(void)
 		mode_func(); 
 // app_mode()에 의해 설정된 mode로 Normal mode와
 // Diagnostic mode중 하나로 스레드들을 실행한다.
-// 그럼 누가 app_mode()를 호출할까? uart.c에 가보길 // 바란다.
+// 그럼 누가 app_mode()를 호출할까? cli.c에 
+// cli_mode()에 가보길바란다. mode라는 명령어 입력을 // 받고 CLI입력을 받고 mode_func을 변경할수 있게
+// 구현되있다.
 	}
 }
 
+// app_init()(모든 스레드 초기화) 함수 정의부
 void app_init(void)
 {
-
 	io_exti_init();
 	polling_init();
 	button_init();
@@ -80,6 +82,7 @@ void app_init(void)
 	cli_init();
 }
 
+// 일반 모드 함수 정의부
 static void app_normal(void)
 {
 	polling_thread(NULL);
@@ -89,12 +92,14 @@ static void app_normal(void)
 	cli_thread(NULL);
 }
 
+// 진단 모드 함수 정의부
 static void app_diagnostic(void)
 {
 	uart_thread(NULL);
 	cli_thread(NULL);
 }
 
+// 입력된 mode값에 따른 모드를 설정하는 함수 정의부
 void app_mode(int mode)
 {
 	if (mode == 0) {
