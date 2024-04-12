@@ -13,7 +13,7 @@
 #include "io.h"
 
 extern UART_HandleTypeDef huart3;
-
+// uart출력을 위한 함수 ->인터럽트방식으로 출력되도록 설정
 int __io_putchar(int ch)
 {
 	HAL_UART_Transmit(&huart3, (uint8_t *)&ch, 1, 0xffff);
@@ -33,10 +33,12 @@ void HAL_IncTick(void)
 
 // EXTI는 0~15까지 있고 총 16개임
 #define D_IO_EXTI_MAX		16
+// External Interrupt의 리스트
 static IO_EXTI_T gIOExtiObjs[D_IO_EXTI_MAX];
 
 static void io_exti_dummy(uint8_t rf, void *arg);
 
+// 인터럽트 스레드 초기화
 void io_exti_init(void)
 {
 	// 배열 전체 임시 초기화
@@ -51,7 +53,7 @@ void io_exti_init(void)
 	gIOExtiObjs[13].pin = USER_Btn_Pin;
 }
 
-// 콜백함수를 변경하기 위한 함수 선언
+// 콜백함수를 변경(등록)하기 위한 함수 선언
 bool io_exti_regcbf(uint8_t idx, IO_CBF_T cbf)
 {
 	if (idx > D_IO_EXTI_MAX) return false;
